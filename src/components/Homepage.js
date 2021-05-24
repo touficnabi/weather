@@ -16,6 +16,7 @@ export class Homepage extends Component {
         pod: null,
         desc: null,
         city: null,
+        country: null,
         unit: 'C',
         greeting: null,
         isLoaded: false
@@ -85,6 +86,7 @@ export class Homepage extends Component {
             const pod = data.pod;
             const desc = data.weather.description;
             const city = data.city_name;
+            const country = data.country_code;
             const precipitation = data.precip;
 
             this.setState({
@@ -96,8 +98,11 @@ export class Homepage extends Component {
                 pod,
                 desc,
                 city,
+                country,
                 isLoaded: true
             })
+
+            if ( country === 'US' ) this.setState({unit: 'F'})
 
         })
 
