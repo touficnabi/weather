@@ -3,6 +3,7 @@ import axios from 'axios';
 import Cookies from "js-cookie";
 import Temperature from "./Temperature";
 import UnitButton from './UnitButton';
+import { Helmet } from 'react-helmet';
 
 
 export class Homepage extends Component {
@@ -112,12 +113,17 @@ export class Homepage extends Component {
 
     render() {
         const { isLoaded, temp, city, desc, windSpeed, precipitation, windDir, feelsLike, pod, unit, greeting } = this.state;
-        const searchQ = desc !== null ? desc.split(' ').join(',') : '';
+        const searchQ = desc !== null ? desc.toLowerCase().split(' ').join('_') : '';
         const imageURL = `https://source.unsplash.com/1920x1080/?${searchQ}`;
-        console.log(imageURL)
+
         if (isLoaded){
             return (
                 <Fragment>
+
+                    <Helmet>
+                        <title>{greeting} - {city}</title>
+                    </Helmet>
+
                     <div className={`wrapper ${pod}`} style={{backgroundImage : 'url(' + imageURL + ')'}}>
 
                         <div className="container">
@@ -145,4 +151,4 @@ export class Homepage extends Component {
     }
 }
 
-export default Homepage
+export default Homepage;

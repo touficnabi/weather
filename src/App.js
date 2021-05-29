@@ -1,33 +1,50 @@
 import { Component } from 'react';
-// import axios from 'axios';
+import axios from 'axios';
 import './App.scss';
 import Homepage from './components/Homepage';
 
 class App extends Component{
 
     state = {
-        lat: 23.796753,
+        lat: 22.796753,
         long: 90.375807,
-        location: true
+        location: false
     }
 
     //CALLING FOR GEOLOCATION
     getLocation = () => {
         if (navigator.geolocation){
-            navigator.geolocation.getCurrentPosition(pos => {
-                const lat = pos.coords.latitude;
-                const long = pos.coords.longitude;
-                
-                this.setState({
-                    lat,
-                    long,
-                    location: true
-                })
-            })
+            navigator.geolocation.getCurrentPosition(this.geolocationSuccess, this.geolocationFailed)
         }
     }
 
-    
+    //IF USER ALLOWS THE LOCATION
+    geolocationSuccess = pos => {
+        const lat = pos.coords.latitude;
+        const long = pos.coords.longitude;
+
+        this.setState({
+            lat,
+            long,
+            location: true
+        })
+    }
+
+    //IF USER DOES NOT ALLOWS THE LOCATION
+    geolocationFailed = error => {
+        console.log('Geolocation error', error)
+        axios.get('https://ipapi.co/latlong/').then(res => {
+            const data = res.data.split(/[,]+/)
+            const lat = data[0];
+            const long = data[1];
+
+            this.setState({
+                lat,
+                long,
+                location : true
+            })
+        })
+    }
 
     componentDidMount(){
         this.getLocation();
