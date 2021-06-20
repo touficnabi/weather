@@ -33,10 +33,14 @@ class App extends Component{
     //IF USER DOES NOT ALLOWS THE LOCATION
     geolocationFailed = error => {
         console.log('Geolocation error', error)
-        axios.get('https://ipapi.co/latlong/').then(res => {
-            const data = res.data.split(/[,]+/)
-            const lat = data[0];
-            const long = data[1];
+        //axios.get('https://ipapi.co/latlong/').then(res => {
+        axios.get('http://api.ipstack.com/check?access_key=278115d3f1f7fbd26854ab640dae5e60').then(res => {
+            console.log(res.data)
+            const lat = res.data.latitude;
+            const long = res.data.longitude;
+            //const data = res.data.split(/[,]+/)
+            //const lat = data[0];
+            //const long = data[1];
 
             this.setState({
                 lat,
