@@ -129,12 +129,10 @@ export class Homepage extends Component {
                         <div className="container">
                             <div className="header">
                                 <UnitButton unit={unit} setupUnit={this.setupUnit} />
-                                
                                 <div className="center">
                                     <h2 className="city">{city}</h2>
                                     <p>{greeting}</p>
                                 </div>
-
                             </div>
 
                             <Temperature temperature={temp} desc={desc} feelsLike={feelsLike} windSpeed={windSpeed} windDir={windDir} unit={unit} makeItFahrenheit={this.makeItFahrenheit} />
